@@ -15,12 +15,12 @@ import java.util.*;
 @Slf4j
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1/fingerprint")
+@RequestMapping("fingerprint")
 @AllArgsConstructor
 public class FingerprintController {
     private final RestTemplate restTemplate;
     @Async("processExecutorFingerprint")
-    @PostMapping
+    @PostMapping(value="/convert")
     ResponseEntity<Object> convertToFingerprint(@RequestBody String payload) throws JsonProcessingException {
             ObjectMapper mapper = new ObjectMapper();
             DocumentFormat submission = mapper.readValue(payload, DocumentFormat.class);

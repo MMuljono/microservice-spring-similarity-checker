@@ -54,7 +54,7 @@ public class SimilarityController {
     }
 
     @Async("processExecutorSimilarity")
-    @PostMapping("/delete/set")
+    @DeleteMapping("/delete/set")
     public ResponseEntity<String> deleteSubmissionSet(@RequestParam String submissionSetName) throws JsonProcessingException {
         similarityServicePostgres.deleteSubmissionSet(submissionSetName);
         return new ResponseEntity<>("Hello World!", HttpStatus.OK);

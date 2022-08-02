@@ -73,7 +73,8 @@ public class SimilarityServicePostgres {
                             Long similarityCosinus = Math.round(new SimilarityCosinus(doc1, doc2).result() * 100);
                             Long similarityEuclianDistance = Math.round(new SimilarityEuclianDistance(doc1, doc2).result());
                             Long similarityJaccard = Math.round(new SimilarityJaccard(doc1, doc2).result() * 100);
-                            if (similarityCosinus >= 50) {
+                            counttotalnumber++;
+                            if (similarityCosinus >= 80) {
                                 SimilaritySummary summary = SimilaritySummary.builder()
                                         .folderName(doc1.getFolderName())
                                         .mainSubmission(doc1.getSubmission().getSubmissionName())
@@ -91,7 +92,6 @@ public class SimilarityServicePostgres {
                                 System.out.println("Main similarity score  "+ similarityCosinus+"%");
                                 System.out.println("Distance vector  " + similarityEuclianDistance);
                                 System.out.println("Amount Similar component  " + similarityJaccard);
-                                counttotalnumber++;
                             }
                         }
 
@@ -101,7 +101,7 @@ public class SimilarityServicePostgres {
                 System.out.println("total result summary " + summaryResult.size());
                 ObjectMapper mapper = new ObjectMapper();
                 Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(summaryResult);
-                ResponseEntity<Object> response = restTemplate.postForEntity("http://mailservice/mail", jsonString, Object.class);
+                ResponseEntity<String> response = restTemplate.postForEntity("http://mailservice/mail", jsonString, String.class);
 //                System.out.println(response);
                 return summaryResult;
             }
@@ -126,7 +126,7 @@ public class SimilarityServicePostgres {
                         Long similarityEuclianDistance = Math.round(new SimilarityEuclianDistance(sub1, sub2).result());
                         Long similarityJaccard = Math.round(new SimilarityJaccard(sub1, sub2).result() * 100);
                         counttotalnumber++;
-                        if (similarityCosinus >= 70) {
+                        if (similarityCosinus >= 80) {
                             SimilaritySummary summary = SimilaritySummary.builder()
                                     .mainSubmission(sub1.getSubmissionName())
                                     .targetSubmission(sub2.getSubmissionName())
@@ -147,6 +147,7 @@ public class SimilarityServicePostgres {
                     }
                 }
             }
+            System.out.println("total calculation done: " + counttotalnumber);
             System.out.println("total result summary " + summaryResult.size() );
             ObjectMapper mapper = new ObjectMapper();
             Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(summaryResult);

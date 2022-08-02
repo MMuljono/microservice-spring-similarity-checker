@@ -34,7 +34,7 @@ public class DocumentOrchestrator {
                         try {
                             Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonPayload);
                             System.out.println(jsonString);
-                            ResponseEntity<Object> response = restTemplate.postForEntity("http://fingerprint/api/v1/fingerprint", jsonString, Object.class);
+                            ResponseEntity<Object> response = restTemplate.postForEntity("http://fingerprint/fingerprint/convert", jsonString, Object.class);
                         } catch (JsonProcessingException ex) {
                             ex.printStackTrace();
                         }
