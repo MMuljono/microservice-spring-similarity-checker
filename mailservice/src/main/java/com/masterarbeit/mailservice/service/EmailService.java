@@ -38,17 +38,18 @@ public class EmailService {
         System.out.println("Mail sent");
     }
 
-    public void addSummaryToDatabase(String pathUrl, SimilaritySummary[] submission){
+    public void addSummaryToDatabase(String pathUrl, List<SimilaritySummary> submission, String email){
         ComparisonResult summaryResult = ComparisonResult
                 .builder()
                 .uniquePath(pathUrl)
+                .email(email)
                 .build();
         comparisonResultRepository.save(summaryResult);
-        Arrays.stream(submission).toList().forEach(r -> {
+        submission.forEach(r -> {
                 r.setComparisonResult(summaryResult);
                 similaritySummaryRepository.save(r);
         });
-        sendEmail("s36838@bht-berlin.de","Result similarity","Please open the link to see result http://localhost:8089/mail/result/" +pathUrl);
+        sendEmail(email,"Result similarity","Please open the link to see result http://localhost:9191/mail/result/" +pathUrl);
     }
 
     public ComparisonResult getSummaryResult (String uniquePath) throws JsonProcessingException {

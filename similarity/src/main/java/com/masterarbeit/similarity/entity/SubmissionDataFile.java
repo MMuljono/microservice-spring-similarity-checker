@@ -23,16 +23,16 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class SubmissionDataFile {
     @Id
     @SequenceGenerator(
-            name="submissionDataFile_sequence",
-            sequenceName = "submissionDataFile_sequence",
+            name="submission_data_file_sequence",
+            sequenceName = "submission_data_file_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "submissionDataFile_sequence"
+            generator = "submission_data_file_sequence"
     )
     @Column(
-            name="submissionDataFile_id",
+            name="submission_data_file_id",
             updatable = false
     )
     private Long submissionDataFileId;

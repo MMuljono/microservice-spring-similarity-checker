@@ -6,7 +6,6 @@ import com.masterarbeit.similarity.*;
 import com.masterarbeit.similarity.entity.*;
 import com.masterarbeit.similarity.repository.*;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -58,7 +57,7 @@ public class SimilarityServicePostgres {
         }
 
         @Transactional
-        public List<SimilaritySummary> compareBasedOnFolder(String folderName) throws JsonProcessingException {
+        public List<SimilaritySummary> compareBasedOnFolder(String folderName, String email) throws JsonProcessingException {
             Optional<List<SubmissionFolderFile>> result = submissionFolderFileRepository.findAllByFolderName((folderName));
             if (result.isPresent()) {
                 List<SimilaritySummary> summaryResult = new ArrayList<SimilaritySummary>();
@@ -99,17 +98,18 @@ public class SimilarityServicePostgres {
                 }
                 System.out.println("total calculation done: " + counttotalnumber);
                 System.out.println("total result summary " + summaryResult.size());
+                SimilarityMailFormat mailFormat = new SimilarityMailFormat(email, summaryResult);
                 ObjectMapper mapper = new ObjectMapper();
-                Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(summaryResult);
+                Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mailFormat);
+
                 ResponseEntity<String> response = restTemplate.postForEntity("http://mailservice/mail", jsonString, String.class);
-//                System.out.println(response);
                 return summaryResult;
             }
             return List.of();
         }
 
     @Transactional
-    public List<SimilaritySummary> compareBasedOnSubmissionSet(String submissionSetName) throws JsonProcessingException {
+    public List<SimilaritySummary> compareBasedOnSubmissionSet(String submissionSetName, String email) throws JsonProcessingException {
         Optional<SubmissionSet> result = submissionSetRepository.findFirstBySubmissionSetName(submissionSetName);
         if (result.isPresent()) {
             List<SimilaritySummary> summaryResult = new ArrayList<SimilaritySummary>();
@@ -149,8 +149,10 @@ public class SimilarityServicePostgres {
             }
             System.out.println("total calculation done: " + counttotalnumber);
             System.out.println("total result summary " + summaryResult.size() );
+            SimilarityMailFormat mailFormat = new SimilarityMailFormat(email, summaryResult);
             ObjectMapper mapper = new ObjectMapper();
-            Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(summaryResult);
+            Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mailFormat);
+            System.out.println(jsonString);
             ResponseEntity<String> response = restTemplate.postForEntity("http://mailservice/mail", jsonString, String.class);
             return summaryResult;
         }

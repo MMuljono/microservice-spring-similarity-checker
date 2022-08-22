@@ -27,16 +27,16 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class SubmissionDepot {
     @Id
     @SequenceGenerator(
-            name="SubmissionDepot_sequence",
-            sequenceName = "SubmissionDepot_sequence",
+            name="submission_depot_sequence",
+            sequenceName = "submission_depot_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
-            strategy = SEQUENCE,
-            generator = "SubmissionDepot_sequence"
+            strategy = GenerationType.IDENTITY,
+            generator = "submission_depot_sequence"
     )
     @Column(
-            name="SubmissionDepot_id",
+            name="submission_depot_id",
             updatable = false
     )
     private Long SubmissionDepotId;

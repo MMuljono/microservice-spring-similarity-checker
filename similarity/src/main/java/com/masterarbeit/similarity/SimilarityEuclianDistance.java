@@ -5,6 +5,9 @@ import com.masterarbeit.similarity.entity.Submission;
 import com.masterarbeit.similarity.entity.SubmissionFolderFile;
 import org.springframework.scheduling.annotation.Async;
 
+/**
+ * Main Class for calculating euclidean distance
+ * */
 public class SimilarityEuclianDistance extends SimilarityNormalizer implements Similarity {
     public SimilarityEuclianDistance(SubmissionFolderFile main, SubmissionFolderFile compare) {
         super(main, compare);

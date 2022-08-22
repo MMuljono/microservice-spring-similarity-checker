@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.*;
 
+/**
+ * Class for implementing the Bag of Words concept
+ * */
 @Data
 public class SimilarityNormalizer {
     private Map<Integer, Integer> mapOfMain;

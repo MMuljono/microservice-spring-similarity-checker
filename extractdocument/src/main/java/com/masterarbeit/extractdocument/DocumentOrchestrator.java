@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class to manage the async process of extracting the content from submissions
+ * */
+
 @EnableAsync
 @Component
 @AllArgsConstructor
@@ -30,10 +34,8 @@ public class DocumentOrchestrator {
                     e.getValue().forEach(x-> {
                         DocumentFormat jsonPayload = new DocumentFormat(lecturer, module, assignment, semester, submissionSetName, e.getKey(),x.getFolderName(),x.getFiles());
                         ObjectMapper mapper = new ObjectMapper();
-                        //Converting the Object to JSONString
                         try {
                             Object jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonPayload);
-                            System.out.println(jsonString);
                             ResponseEntity<Object> response = restTemplate.postForEntity("http://fingerprint/fingerprint/convert", jsonString, Object.class);
                         } catch (JsonProcessingException ex) {
                             ex.printStackTrace();

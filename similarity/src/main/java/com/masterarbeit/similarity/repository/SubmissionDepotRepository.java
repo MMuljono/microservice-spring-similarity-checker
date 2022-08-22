@@ -17,7 +17,7 @@ public interface SubmissionDepotRepository extends JpaRepository<SubmissionDepot
    @Modifying(flushAutomatically = true)
    @Transactional
    @Query(
-           value = "INSERT INTO submission_depot(submission_depot_id, lecturer_name, module_name) VALUES (nextval('submission_depot_id_seq'),?1, ?2) ON conflict ON CONSTRAINT depot_key_unique DO NOTHING;" ,
+           value = "INSERT INTO submission_depot(submission_depot_id, lecturer_name, module_name) VALUES (nextval('submission_depot_sequence'),?1, ?2) ON conflict ON CONSTRAINT depot_key_unique DO NOTHING;" ,
            nativeQuery = true
    )
    void upsertByLecturerNameModuleName(String lecturerName, String moduleName);

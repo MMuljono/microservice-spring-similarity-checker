@@ -19,7 +19,7 @@ public interface SubmissionRepository extends JpaRepository<Submission,Long> {
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query(
-            value = "INSERT INTO submission(submission_id, submission_name, submission_set_id) VALUES (nextval('submission_id_seq'), ?1, ?2) ON conflict ON CONSTRAINT submission_key_unique DO NOTHING;" ,
+            value = "INSERT INTO submission(submission_id, submission_name, submission_set_id) VALUES (nextval('submission_sequence'), ?1, ?2) ON conflict ON CONSTRAINT submission_key_unique DO NOTHING;" ,
             nativeQuery = true
     )
     void upsertBySubmissionName(String submissionName, Long submissionSetId);

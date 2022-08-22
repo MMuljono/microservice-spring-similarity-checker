@@ -8,6 +8,9 @@ import org.springframework.scheduling.annotation.Async;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Main Class for calculating Jaccard similarity
+ * */
 public class SimilarityJaccard extends SimilarityNormalizer implements Similarity {
     public SimilarityJaccard(SubmissionFolderFile main, SubmissionFolderFile compare) {
         super(main, compare);

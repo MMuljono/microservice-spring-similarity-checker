@@ -27,13 +27,13 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class SubmissionSet {
     @Id
     @SequenceGenerator(
-            name="submissionSet_sequence",
-            sequenceName = "submissionSet_sequence",
+            name="submission_set_sequence",
+            sequenceName = "submission_set_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "submissionSet_sequence"
+            generator = "submission_set_sequence"
     )
     @Column(
             name="submission_set_id"

@@ -13,7 +13,9 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-
+/**
+ * Main class for extracting the contents from a file
+ * */
 public class DocumentExtract {
     private HashMap<String, List<DocumentFolderFormat>> submissionDocuments = new HashMap<String, List<DocumentFolderFormat>>();
     public HashMap<String, List<DocumentFolderFormat>> content(File zip, Integer indexType) throws IOException {
@@ -22,6 +24,7 @@ public class DocumentExtract {
             Enumeration<? extends ZipEntry> entries = zipFile.entries();
             while(entries.hasMoreElements()){
                 ZipEntry entry = entries.nextElement();
+                /** It will first filter some of specific endings that are not relevant for the calculation */
                 if ((  entry.getName().endsWith(".js") || entry.getName().endsWith(".java"))
                         && !entry.getName().contains("__MACOSX") && !entry.getName().contains("node_modules")
                         &&
@@ -30,6 +33,7 @@ public class DocumentExtract {
                         && !entry.getName().contains(".min.")
                         && !entry.getName().contains("tailwind")
                         && !entry.getName().contains("bootstrap") && !entry.getName().contains("material"))) {
+                    /** Pattern matching to get the folder's name */
                     Pattern folderPattern = Pattern.compile("\\/(a\\d{1,2})\\/");
                     Matcher matchFolderName = folderPattern.matcher(entry.getName());
                     String specificFolderName = "";
@@ -37,6 +41,7 @@ public class DocumentExtract {
                         specificFolderName = matchFolderName.group(1);
                         System.out.println(entry.getName() + "   " + specificFolderName);
                     }
+                    /** Pattern matching to get filename */
                     Pattern pattern = Pattern.compile("^(.+)\\/([^\\/]+)$");
                     Matcher match = pattern.matcher(entry.getName());
                     String[] parts;

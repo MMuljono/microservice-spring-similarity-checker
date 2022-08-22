@@ -3,6 +3,7 @@ package com.masterarbeit.mailservice;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.masterarbeit.mailservice.entity.ComparisonResult;
+import com.masterarbeit.mailservice.entity.SimilarityMailFormat;
 import com.masterarbeit.mailservice.entity.SimilaritySummary;
 import com.masterarbeit.mailservice.service.EmailService;
 import lombok.AllArgsConstructor;
@@ -12,24 +13,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @RestController
 @CrossOrigin
-@RequestMapping("mail")
+@RequestMapping("/mail")
 @AllArgsConstructor
 public class EmailServiceController {
     private final EmailService emailService;
     @PostMapping
     ResponseEntity<String> addComparisonResult(@RequestBody String payload) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        SimilaritySummary[] submission = mapper.readValue(payload, SimilaritySummary[].class);
-        Arrays.stream(submission).toList().forEach(e->System.out.println(e));
+        SimilarityMailFormat result = mapper.readValue(payload, SimilarityMailFormat.class);
+        String email = result.getEmail();
+        List<SimilaritySummary> submission = result.getSummary();
         String uuid = UUID.randomUUID().toString();
         Integer sizedId = uuid.length();
         String uniqueIdPathUrl = uuid.substring(sizedId-8,sizedId);
-        emailService.addSummaryToDatabase(uniqueIdPathUrl,submission);
+        emailService.addSummaryToDatabase(uniqueIdPathUrl, submission, email);
         return new ResponseEntity<String>("Okay", HttpStatus.OK);
     }
 

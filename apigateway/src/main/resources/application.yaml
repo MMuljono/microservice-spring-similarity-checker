@@ -25,6 +25,10 @@ spring:
           uri: lb://similarity
           predicates:
             - Path=/similar/**
+        - id: mailservice
+          uri: lb://mailservice
+          predicates:
+            - Path=/mail/**
 
 eureka:
   client:

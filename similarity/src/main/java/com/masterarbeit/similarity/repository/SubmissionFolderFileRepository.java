@@ -19,7 +19,7 @@ public interface SubmissionFolderFileRepository extends JpaRepository<Submission
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query(
-            value = "INSERT INTO submission_folder_file(submission_folder_file_id, folder_name, submission_id) VALUES (nextval('submission_folder_file_id_seq'), ?1, ?2) ON conflict ON CONSTRAINT folder_file_key_unique DO NOTHING;" ,
+            value = "INSERT INTO submission_folder_file(submission_folder_file_id, folder_name, submission_id) VALUES (nextval('submission_folder_file_sequence'), ?1, ?2) ON conflict ON CONSTRAINT folder_file_key_unique DO NOTHING;" ,
             nativeQuery = true
     )
     void upsertByFolderName(String folderName, Long submissionId);

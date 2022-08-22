@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+/**
+ * The tokenizer class
+ * Main purpose: Convert stream of inputs into tokens
+ * */
 public class DocumentNormalizer {
     private static final Hashtable<Integer,String> myHashTableJS = new Hashtable<>() {{
         put(0,       "NULL");
@@ -33,6 +37,9 @@ public class DocumentNormalizer {
         put(23,      "OPRT");
     }};
 
+    /**
+     * Function to replace the identified number into a token string
+     * */
     private static void getValueHash (Integer type, List<String> array) {
         String existInTable = myHashTableJS.get(type);
         if (existInTable != null) {
@@ -40,8 +47,13 @@ public class DocumentNormalizer {
         }
     }
 
+    /**
+     * The core of tokenizer process
+     * The function will stream the inputs and will identify it with a unique id number
+     */
     public static List<String> setText(String resource, String filetype) {
         RSyntaxTextArea textArea = new RSyntaxTextArea(resource);
+        /** Tokenizer will process according to the file's type */
         if (filetype.equals("js")) {
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT);
         } else if (filetype.equals("java")) {
@@ -52,7 +64,8 @@ public class DocumentNormalizer {
             textArea.setCaretPosition(0);
             textArea.discardAllEdits();
             RSyntaxDocument doc = (RSyntaxDocument)textArea.getDocument();
-
+            /** Stream of token will be recognized and some specific token will be skipped
+             * For example tokens for whitespace, comments, etc */
             for (Token token : doc) {
                 Integer type = token.getType();
                 switch(type){

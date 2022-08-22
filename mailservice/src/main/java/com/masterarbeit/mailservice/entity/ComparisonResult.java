@@ -39,6 +39,11 @@ public class ComparisonResult {
     )
     private String uniquePath;
 
+    @Column(
+            name ="email"
+    )
+    private String email;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comparisonResult", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<SimilaritySummary> similaritySummaries;

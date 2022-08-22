@@ -8,10 +8,18 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * The winnowing algorithm class
+ */
 public class FingerprintWinnowingService {
+    /**
+     * Setting the window size and k-grams */
     private static Integer kgrams = 33;
     private static Integer winsize = 23;
 
+    /**
+     * Function to Hash each of the k-gram
+     * */
     private static List hashingToken(List<String> tokens) {
         ArrayList<Integer> hashInArray =  new ArrayList<Integer>();
         for (String token : tokens) {
@@ -27,6 +35,9 @@ public class FingerprintWinnowingService {
         return winnowing(hashInArray);
     }
 
+    /**
+     * Function to divide the token list into each k-gram size
+     * */
     public static List groupingToken(List<String> listOfText) {
         String text = String.join("", listOfText);
         int length = text.length();
@@ -37,6 +48,9 @@ public class FingerprintWinnowingService {
         return hashingToken(pieces);
     }
 
+    /**
+     * Function to check and update the minimum value in each window
+     * */
     private static int minimumIndex(List<Integer> win) {
         int minValue = win.get(0);
         int minIndex = 0;
@@ -50,6 +64,10 @@ public class FingerprintWinnowingService {
         return minIndex;
     }
 
+    /**
+     * The core winnowing algorithm
+     * Function to select fewer fingerprints to be the representative of the file.
+     * */
     private static List winnowing(ArrayList<Integer> tokens) {
         int minCur = 0;
         int minPrev = 0;

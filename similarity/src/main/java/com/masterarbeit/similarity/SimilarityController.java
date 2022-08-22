@@ -27,9 +27,9 @@ public class SimilarityController {
     private final SimilarityServicePostgres similarityServicePostgres;
     @Async("processExecutorSimilarity")
     @PostMapping("/compare/folder")
-    public ResponseEntity<String> list(@RequestParam String folderName) throws JsonProcessingException {
-        List<SimilaritySummary> result = similarityServicePostgres.compareBasedOnFolder(folderName);
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+    public ResponseEntity<String> list(@RequestParam String folderName, @RequestParam String email) throws JsonProcessingException {
+        List<SimilaritySummary> result = similarityServicePostgres.compareBasedOnFolder(folderName, email);
+        return new ResponseEntity<>("Comparing submissions based on folder's name", HttpStatus.OK);
     }
 
     @Async("processExecutorSimilarity")
@@ -48,16 +48,16 @@ public class SimilarityController {
 
     @Async("processExecutorSimilarity")
     @PostMapping("/compare/set")
-    public ResponseEntity<String> comparisonOneSubmissionSet(@RequestParam String submissionSetName) throws JsonProcessingException {
-        List<SimilaritySummary> result = similarityServicePostgres.compareBasedOnSubmissionSet(submissionSetName);
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+    public ResponseEntity<String> comparisonOneSubmissionSet(@RequestParam String submissionSetName, @RequestParam String email) throws JsonProcessingException {
+        List<SimilaritySummary> result = similarityServicePostgres.compareBasedOnSubmissionSet(submissionSetName, email);
+        return new ResponseEntity<>("Comparing submissions based on submission set name", HttpStatus.OK);
     }
 
     @Async("processExecutorSimilarity")
     @DeleteMapping("/delete/set")
     public ResponseEntity<String> deleteSubmissionSet(@RequestParam String submissionSetName) throws JsonProcessingException {
         similarityServicePostgres.deleteSubmissionSet(submissionSetName);
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+        return new ResponseEntity<>("Deleted all submissions from one submission set", HttpStatus.OK);
     }
 
     @GetMapping(value={"/submission/{id}"})

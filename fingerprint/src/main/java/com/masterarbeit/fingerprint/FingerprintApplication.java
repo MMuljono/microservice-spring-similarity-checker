@@ -1,6 +1,5 @@
 package com.masterarbeit.fingerprint;
 
-import org.bouncycastle.util.Fingerprint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

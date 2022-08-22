@@ -19,7 +19,7 @@ public interface SubmissionSetRepository extends JpaRepository<SubmissionSet,Lon
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query(
-            value = "INSERT INTO submission_set(submission_set_id, submission_set_name, semester, assignment_name, submission_depot_id) VALUES (nextval('submission_set_id_seq'), ?1, ?2, ?3, ?4) ON conflict ON CONSTRAINT submissionsetid_unique DO NOTHING;" ,
+            value = "INSERT INTO submission_set(submission_set_id, submission_set_name, semester, assignment_name, submission_depot_id) VALUES (nextval('submission_set_sequence'), ?1, ?2, ?3, ?4) ON conflict ON CONSTRAINT submissionsetid_unique DO NOTHING;" ,
             nativeQuery = true
     )
     void upsertBySubmissionSetNameSemesterDepotId(String submissionSetName, String semester, String assignmentName, Long depotId);
