@@ -44,12 +44,6 @@ public class EmailServiceController {
         System.out.println(jsonString);
         return new ResponseEntity<Object>(jsonString, HttpStatus.OK);
     }
-
-    @GetMapping
-    public ResponseEntity<Object> checkEmailWorking () throws JsonProcessingException {
-        emailService.sendEmail("s36838@bht-berlin.de","testing email", "asg");
-        return new ResponseEntity<Object>("okay", HttpStatus.OK);
-    }
 }
 
 
